@@ -1,95 +1,105 @@
+"use client";
+
 import Image from "next/image";
-import styles from "./page.module.css";
+import { signIn } from "next-auth/react";
 
-export default function Home() {
+// Fungsi Login ke Active Directory
+const LoginAd = async () => {
+  localStorage.setItem("Role", "Admin");
+  const loginUrl = "https://login.sinarmasland.com/Account/Login?ReturnUrl=";
+  const returnUrl = encodeURIComponent(window.location.origin + "/HomePage");
+  window.location.href = `${loginUrl}${returnUrl}`;
+};
+
+export default function LoginPage() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div
+      className="grid min-h-screen grid-cols-1 md:grid-cols-2"
+      style={{
+        backgroundImage: `url('/BGLogin.png')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      {/* Kiri: Gambar Login */}
+      <div className="hidden md:flex items-center justify-center p-4">
+        <div className="relative">
+          <Image
+            src="/LoginPage.png"
+            alt="Login Image"
+            width={600}
+            height={600}
+            className="rounded-xl"
+            priority
+          />
+        </div>
+      </div>
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      {/* Kanan: Form Login */}
+      <div className="flex flex-col justify-center px-8 sm:px-16">
+        <div className="w-full max-w-md mx-auto">
+          {/* Logo */}
+          <div className="mb-8">
+            <Image
+              src="/LogoDigitalArsip.png"
+              alt="Logo"
+              width={50}
+              height={50}
+            />
+          </div>
+
+          {/* Judul */}
+          <h2 className="text-5xl font-bold mb-2">Hi, Welcome Back 👋</h2>
+          <p className="text-gray-600 mb-6">
+            Please take a moment to log in using your credentials to explore all
+            the valuable information stored within!
+          </p>
+
+          {/* Tombol Active Directory */}
+          <button
+            className="btn w-full btn-outline flex items-center justify-center gap-2 bg-white border border-gray-300 rounded-md py-2 mb-6 hover:bg-gray-100 transition"
+            onClick={LoginAd}
           >
             <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
+              src="/LogoMicrosoft.png"
+              alt="Microsoft"
               width={20}
               height={20}
             />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
+            <span className="text-sm font-medium">
+              Sign In With Active Directory
+            </span>
+          </button>
+
+          {/* Divider */}
+          <div className="flex items-center justify-center my-4">
+            <span className="text-gray-400 text-sm">or</span>
+          </div>
+
+          {/* Tombol Google */}
+          <button
+            className="btn w-full btn-outline flex items-center justify-center gap-2 bg-white border border-gray-300 rounded-md py-2 hover:bg-gray-100 transition"
+            onClick={() => signIn("google")}
           >
-            Read our docs
-          </a>
+            <Image src="/GoogleIcon.png" alt="Google" width={20} height={20} />
+            <span className="text-sm font-medium">Sign In With Google</span>
+          </button>
+          {/* Divider */}
+          <div className="flex items-center justify-center my-4">
+            <span className="text-gray-400 text-sm">or</span>
+          </div>
+
+          {/* Tombol Google */}
+          <button
+            className="btn w-full btn-outline flex items-center justify-center gap-2 bg-white border border-gray-300 rounded-md py-2 hover:bg-gray-100 transition"
+            onClick={() => signIn("google")}
+          >
+            <Image src="/GoogleIcon.png" alt="Google" width={20} height={20} />
+            <span className="text-sm font-medium">Sign In With OTP</span>
+          </button>
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
     </div>
   );
 }
